@@ -1,3 +1,6 @@
+import java.io.*;
+import java.util.Random;
+
 class Cells {
 
     private int[][] currentState;
@@ -19,6 +22,32 @@ class Cells {
         columnCount = currentState[0].length;
     }
 
+    Cells(String path) throws IOException {
+        FileInputStream fileInputStream = new FileInputStream(path);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream));
+        String str = reader.readLine();
+        rowCount = Integer.valueOf(str.split(" ")[0]);
+        columnCount = Integer.valueOf(str.split(" ")[1]);
+        currentState = new int[rowCount][columnCount];
+        int row = 0;
+        while ((str = reader.readLine()) != null) {
+            String[] aRow = str.split(" ");
+            for (int i = 0; i < aRow.length; i++) {
+                currentState[row][i] = Integer.valueOf(aRow[i]);
+            }
+            row++;
+        }
+    }
+
+    Cells(int rowCount, int columnCount) {
+        currentState = new int[rowCount][columnCount];
+        for (int row = 0; row < rowCount; row++) {
+            for (int column = 0; column < columnCount; column++) {
+                currentState[row][column] = new Random().nextBoolean() ? 1 : 0;
+            }
+        }
+    }
+
     void nextState() {
         int[][] newState = new int[rowCount][columnCount];
         for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
@@ -33,7 +62,7 @@ class Cells {
         return currentState;
     }
 
-    int cellNextState(int row, int column) {
+    private int cellNextState(int row, int column) {
 
         int livingCellCount = livingCellCount(row, column);
         switch (currentState[row][column]) {

@@ -19,7 +19,6 @@ public class GlobalCellTest {
         Cells cells = new Cells(currentState);
         cells.nextState();
 
-
         Cells actual = new Cells(expectedState);
         for (int row = 0; row < expectedState.length; row++) {
             for (int column = 0; column < expectedState[0].length; column++) {

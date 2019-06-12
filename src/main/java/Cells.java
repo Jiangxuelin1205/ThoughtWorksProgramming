@@ -101,6 +101,14 @@ class Cells {
         return currentState[row][column];
     }
 
+    int row(){
+        return rowCount;
+    }
+
+    int column(){
+        return columnCount;
+    }
+
     private boolean outOfColumnBound(int column) {
         return column >= columnCount || column < 0;
     }

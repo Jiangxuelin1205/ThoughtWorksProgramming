@@ -5,14 +5,19 @@ class Cells {
     private static final int LIVING_STATE = 1;
     private static final int DIE_STATE = 0;
 
-    Cells(int[][] currentState) {
+    private int rowCount;
+    private int columnCount;
+
+    Cells(int[][] currentState) {//todo:currentState
         this.currentState = currentState;
+        rowCount = currentState.length;
+        columnCount = currentState[0].length;
     }
 
     int nextState(int row, int column) {
 
-        int livingCellCount =livingCellCount(row, column);
-        return getNextState(row, column, livingCellCount);
+        int livingCellCount = livingCellCount(row, column);
+        return getNextState(row, column, livingCellCount);//todo
     }
 
     private int getNextState(int row, int column, int livingCellCount) {
@@ -35,10 +40,15 @@ class Cells {
     }
 
     private int livingCellCount(int row, int column) {
-        //todo:边界问题
         int livingCellCount = 0;
-        for (int rowIndex = row - 1; rowIndex <= row + 1; rowIndex++) {
-            for (int columnIndex = column - 1; columnIndex <= column + 1; columnIndex++) {
+
+        int rowStart = row - 1 < 0 ? 0 : row - 1;
+        int rowEnd = row + 1 > rowCount - 1 ? rowCount - 1 : row + 1;
+        int columnStart = column - 1 < 0 ? 0 : column - 1;
+        int columnEnd = column + 1 > columnCount - 1 ? columnCount - 1 : column + 1;
+
+        for (int rowIndex = rowStart; rowIndex <= rowEnd; rowIndex++) {
+            for (int columnIndex = columnStart; columnIndex <= columnEnd; columnIndex++) {
                 livingCellCount += currentState[rowIndex][columnIndex];
             }
         }

@@ -1,7 +1,7 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-public class GameOfLifeTest {
+public class SingleCellTest {
 
     @Test
     public void living_cell_with_fewer_than_two_neighbours_will_die() {

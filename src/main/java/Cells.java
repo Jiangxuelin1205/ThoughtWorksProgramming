@@ -24,7 +24,7 @@ class Cells {
         int[][] nextState = new int[rowCount][columnCount];
         for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
             for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
-                nextState[rowIndex][columnIndex]=state[rowIndex][columnIndex].nextState(rowCount,columnCount,this);
+                nextState[rowIndex][columnIndex]=this.state[rowIndex][columnIndex].nextState(rowCount,columnCount,this);
             }
         }
        for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
@@ -35,10 +35,10 @@ class Cells {
     }
 
     Cell[][] currentState(){
-        return state;
+        return this.state;
     }
 
     int singleState(int row,int column){
-        return state[row][column].state();
+        return this.state[row][column].state();
     }
 }

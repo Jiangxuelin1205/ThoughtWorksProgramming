@@ -11,10 +11,11 @@ public class BoundaryCellTest {
                 {0, 1, 0, 0},
                 {0, 0, 0, 0}
         };
-        //when
         Cells cells = new Cells(currentState);
+        //when
+        cells.nextState();
         //then
-        Assert.assertEquals(cells.nextState(0, 0), 0);
+        Assert.assertEquals(cells.singleState(0, 0), 0);
     }
 
     @Test
@@ -25,10 +26,11 @@ public class BoundaryCellTest {
                 {1, 1, 1, 1},
                 {0, 0, 1, 1}
         };
-        //when
         Cells cells = new Cells(currentState);
+        //when
+        cells.nextState();
         //then
-        Assert.assertEquals(cells.nextState(0, 2), 0);
+        Assert.assertEquals(cells.singleState(0, 1), 0);
     }
 
     @Test
@@ -39,10 +41,11 @@ public class BoundaryCellTest {
                 {1, 1, 1, 0},
                 {0, 0, 1, 1}
         };
-        //when
         Cells cells = new Cells(currentState);
+        //when
+        cells.nextState();
         //then
-        Assert.assertEquals(cells.nextState(2, 3), 1);
+        Assert.assertEquals(cells.singleState(2, 3), 1);
     }
 
     @Test
@@ -53,10 +56,11 @@ public class BoundaryCellTest {
                 {1, 1, 0, 0},
                 {0, 0, 0, 1}
         };
-        //when
         Cells cells = new Cells(currentState);
+        //when
+        cells.nextState();
         //then
-        Assert.assertEquals(cells.nextState(1, 1), 1);
+        Assert.assertEquals(cells.singleState(1, 1), 1);
     }
 
     @Test
@@ -67,10 +71,11 @@ public class BoundaryCellTest {
                 {1, 1, 0, 0},
                 {0, 0, 0, 1}
         };
-        //when
         Cells cells = new Cells(currentState);
+        //when
+        cells.nextState();
         //then
-        Assert.assertEquals(cells.nextState(0, 0), 1);
+        Assert.assertEquals(cells.singleState(1, 2), 0);
     }
 
     @Test
@@ -81,10 +86,11 @@ public class BoundaryCellTest {
                 {1, 1, 1, 0},
                 {0, 0, 0, 1}
         };
-        //when
         Cells cells = new Cells(currentState);
+        //when
+        cells.nextState();
         //then
-        Assert.assertEquals(cells.nextState(0, 2), 0);
+        Assert.assertEquals(cells.singleState(0, 1), 0);
     }
 
     @Test
@@ -95,9 +101,10 @@ public class BoundaryCellTest {
                 {1, 1, 1, 0},
                 {0, 0, 0, 0}
         };
-        //when
         Cells cells = new Cells(currentState);
+        //when
+        cells.nextState();
         //then
-        Assert.assertEquals(cells.nextState(2, 3), 0);
+        Assert.assertEquals(cells.singleState(2, 2), 0);
     }
 }

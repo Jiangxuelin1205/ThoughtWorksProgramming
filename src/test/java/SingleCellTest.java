@@ -11,13 +11,16 @@ public class SingleCellTest {
                 {0, 1, 0},
                 {0, 0, 0}
         };
-        //when
         Cells cells = new Cells(currentState);
+        //when
+        cells.nextState();
         //then
-        Assert.assertEquals(cells.nextState(1, 1), 0);
+        Assert.assertEquals(cells.singleState(1, 1), 0);
+
+
     }
 
-    @Test
+   @Test
     public void living_cell_with_more_than_three_neighbours_will_die() {
         //given
         int[][] currentState = new int[][]{
@@ -25,14 +28,15 @@ public class SingleCellTest {
                 {0, 1, 0},
                 {1, 1, 1}
         };
+       Cells cells = new Cells(currentState);
         //when
-        Cells cells = new Cells(currentState);
+        cells.nextState();
         //then
-        Assert.assertEquals(cells.nextState(1, 1), 0);
+        Assert.assertEquals(cells.singleState(1, 1), 0);
     }
 
     @Test
-    public void living_cell_with_two_neighbours_will_live_on() {
+    public void living_cell_with_two_neighbours_will_live_on(){
         //given
         int[][] currentState = new int[][]{
                 {0, 0, 1},
@@ -41,8 +45,9 @@ public class SingleCellTest {
         };
         //when
         Cells cells = new Cells(currentState);
+        cells.nextState();
         //then
-        Assert.assertEquals(cells.nextState(1, 1), 1);
+        Assert.assertEquals(cells.singleState(1, 1), 1);
     }
 
     @Test
@@ -53,10 +58,11 @@ public class SingleCellTest {
                 {0, 1, 0},
                 {1, 0, 1}
         };
-        //when
         Cells cells = new Cells(currentState);
+        //when
+        cells.nextState();
         //then
-        Assert.assertEquals(cells.nextState(1, 1), 1);
+        Assert.assertEquals(cells.singleState(1, 1), 1);
     }
 
     @Test
@@ -67,10 +73,11 @@ public class SingleCellTest {
                 {0, 0, 0},
                 {1, 0, 1}
         };
-        //when
         Cells cells = new Cells(currentState);
+        //when
+        cells.nextState();
         //then
-        Assert.assertEquals(cells.nextState(1, 1), 1);
+        Assert.assertEquals(cells.singleState(1, 1), 1);
     }
 
     @Test
@@ -81,10 +88,11 @@ public class SingleCellTest {
                 {0, 0, 0},
                 {1, 1, 1}
         };
-        //when
         Cells cells = new Cells(currentState);
+        //when
+        cells.nextState();
         //then
-        Assert.assertEquals(cells.nextState(1, 1), 0);
+        Assert.assertEquals(cells.singleState(1, 1), 0);
     }
 
     @Test
@@ -95,9 +103,10 @@ public class SingleCellTest {
                 {0, 0, 0},
                 {0, 0, 1}
         };
-        //when
         Cells cells = new Cells(currentState);
+        //when
+        cells.nextState();
         //then
-        Assert.assertEquals(cells.nextState(1, 1), 0);
+        Assert.assertEquals(cells.singleState(1, 1), 0);
     }
 }

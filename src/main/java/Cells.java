@@ -1,44 +1,82 @@
 class Cells {
 
-    private Cell[][] state;
+    private int[][] currentState;
 
-    private int rowCount;
-    private int columnCount;
+    private static final int LIVING_STATE = 1;
+    private static final int DEAD_STATE = 0;
 
-    Cells(int[][] state) {
-        rowCount = state.length;
-        columnCount = state[0].length;
-        this.state = new Cell[rowCount][columnCount];
-        parse(state);
+    private static int rowCount = 0;
+    private static int columnCount = 0;
+
+    private static final int WAKE_UP_DEAD_CELL = 3;
+
+    private static final int LIVE_ON_MIN = 2;
+    private static final int LIVE_ON_MAX = 3;
+
+    Cells(int[][] currentState) {
+        this.currentState = currentState;
+        rowCount = currentState.length;
+        columnCount = currentState[0].length;
     }
 
-    private void parse(int[][] state) {
-        for (int rowIndex = 0; rowIndex < state.length; rowIndex++) {
-            for (int columnIndex = 0; columnIndex < state[0].length; columnIndex++) {
-                this.state[rowIndex][columnIndex] = new Cell(state[rowIndex][columnIndex], rowIndex, columnIndex);
-            }
-        }
-    }
-
-   void nextState() {
-        int[][] nextState = new int[rowCount][columnCount];
+    void nextState() {
+        int[][] newState = new int[rowCount][columnCount];
         for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
             for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
-                nextState[rowIndex][columnIndex]=this.state[rowIndex][columnIndex].nextState(rowCount,columnCount,this);
+                newState[rowIndex][columnIndex] = cellNextState(rowIndex, columnIndex);
             }
         }
-       for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-           for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
-               this.state[rowIndex][columnIndex].setState(nextState[rowIndex][columnIndex]);
-           }
-       }
+        currentState = newState;
     }
 
-    Cell[][] currentState(){
-        return this.state;
+    int[][] currentState() {
+        return currentState;
     }
 
-    int singleState(int row,int column){
-        return this.state[row][column].state();
+    int cellNextState(int row, int column) {
+
+        int livingCellCount = livingCellCount(row, column);
+        switch (currentState[row][column]) {
+            case LIVING_STATE:
+                return livingCellNextState(livingCellCount);
+            case DEAD_STATE:
+                return dieCellNextState(livingCellCount);
+        }
+        throw new IllegalStateException();
+    }
+
+    private int dieCellNextState(int livingCellCount) {
+        return (livingCellCount == WAKE_UP_DEAD_CELL) ? LIVING_STATE : DEAD_STATE;
+    }
+
+    private int livingCellNextState(int livingCellCount) {
+        return (livingCellCount >= LIVE_ON_MIN && livingCellCount <= LIVE_ON_MAX) ? LIVING_STATE : DEAD_STATE;
+    }
+
+    private int livingCellCount(int row, int column) {
+
+        int livingCellCount = 0;
+        for (int rowIndex = row - 1; rowIndex <= row + 1; rowIndex++) {
+            for (int columnIndex = column - 1; columnIndex <= column + 1; columnIndex++) {
+                livingCellCount += cellState(rowIndex, columnIndex);
+            }
+        }
+        livingCellCount = livingCellCount - currentState[row][column];
+        return livingCellCount;
+    }
+
+    int cellState(int row, int column) {
+        if (outOfRowBound(row) || outOfColumnBound(column)) {
+            return DEAD_STATE;
+        }
+        return currentState[row][column];
+    }
+
+    private boolean outOfColumnBound(int column) {
+        return column >= columnCount || column < 0;
+    }
+
+    private boolean outOfRowBound(int row) {
+        return row >= rowCount || row < 0;
     }
 }

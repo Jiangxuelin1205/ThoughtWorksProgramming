@@ -16,7 +16,7 @@ public class SingleCellTest {
         //when
         cells.nextState();
         //then
-        Assert.assertEquals(cells.cellState(1,1), 0);
+        Assert.assertEquals(cells.cellCurrentState(1,1), 0);
 
 
     }
@@ -33,7 +33,7 @@ public class SingleCellTest {
        //when
        cells.nextState();
        //then
-       Assert.assertEquals(cells.cellState(1,1), 0);
+       Assert.assertEquals(cells.cellCurrentState(1,1), 0);
     }
 
     @Test
@@ -48,7 +48,7 @@ public class SingleCellTest {
         Cells cells = new Cells(currentState);
         cells.nextState();
         //then
-        Assert.assertEquals(cells.cellState(1, 1), 1);
+        Assert.assertEquals(cells.cellCurrentState(1, 1), 1);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class SingleCellTest {
         //when
         cells.nextState();
         //then
-        Assert.assertEquals(cells.cellState(1, 1), 1);
+        Assert.assertEquals(cells.cellCurrentState(1, 1), 1);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class SingleCellTest {
         //when
         cells.nextState();
         //then
-        Assert.assertEquals(cells.cellState(1, 1), 1);
+        Assert.assertEquals(cells.cellCurrentState(1, 1), 1);
     }
 
     @Test
@@ -93,7 +93,7 @@ public class SingleCellTest {
         //when
         cells.nextState();
         //then
-        Assert.assertEquals(cells.cellState(1, 1), 0);
+        Assert.assertEquals(cells.cellCurrentState(1, 1), 0);
     }
 
     @Test
@@ -108,6 +108,6 @@ public class SingleCellTest {
         //when
         cells.nextState();
         //then
-        Assert.assertEquals(cells.cellState(1, 1), 0);
+        Assert.assertEquals(cells.cellCurrentState(1, 1), 0);
     }
 }

@@ -10,7 +10,7 @@ public class FileInputTest {
     public void file_test() throws IOException {
         Cells cells=new Cells("./src/main/java/cells.txt");
         cells.nextState();
-        Assert.assertEquals(cells.cellState(1,1),1);
+        Assert.assertEquals(cells.cellCurrentState(1,1),1);
     }
 
 }

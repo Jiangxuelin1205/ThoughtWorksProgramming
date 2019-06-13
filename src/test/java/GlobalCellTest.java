@@ -23,7 +23,7 @@ public class GlobalCellTest {
         Cells actual = new Cells(expectedState);
         for (int row = 0; row < expectedState.length; row++) {
             for (int column = 0; column < expectedState[0].length; column++) {
-                Assert.assertEquals(cells.cellState(row, column), actual.cellState(row, column));
+                Assert.assertEquals(cells.cellCurrentState(row, column), actual.cellCurrentState(row, column));
             }
         }
     }
@@ -49,7 +49,7 @@ public class GlobalCellTest {
         Cells actual = new Cells(expectedState);
         for (int row = 0; row < expectedState.length; row++) {
             for (int column = 0; column < expectedState[0].length; column++) {
-                Assert.assertEquals(cells.cellState(row, column), actual.cellState(row, column));
+                Assert.assertEquals(cells.cellCurrentState(row, column), actual.cellCurrentState(row, column));
             }
         }
     }

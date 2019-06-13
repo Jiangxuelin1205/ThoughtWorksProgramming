@@ -16,7 +16,7 @@ public class BoundaryCellTest {
         //when
         cells.nextState();
         //then
-        Assert.assertEquals(cells.cellState(0, 0), 0);
+        Assert.assertEquals(cells.cellCurrentState(0, 0), 0);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class BoundaryCellTest {
         //when
         cells.nextState();
         //then
-        Assert.assertEquals(cells.cellState(0, 1), 0);
+        Assert.assertEquals(cells.cellCurrentState(0, 1), 0);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class BoundaryCellTest {
         //when
         cells.nextState();
         //then
-        Assert.assertEquals(cells.cellState(2, 3), 1);
+        Assert.assertEquals(cells.cellCurrentState(2, 3), 1);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class BoundaryCellTest {
         //when
         cells.nextState();
         //then
-        Assert.assertEquals(cells.cellState(1, 1), 1);
+        Assert.assertEquals(cells.cellCurrentState(1, 1), 1);
     }
 
     @Test
@@ -76,7 +76,7 @@ public class BoundaryCellTest {
         //when
         cells.nextState();
         //then
-        Assert.assertEquals(cells.cellState(1, 2), 0);
+        Assert.assertEquals(cells.cellCurrentState(1, 2), 0);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class BoundaryCellTest {
         //when
         cells.nextState();
         //then
-        Assert.assertEquals(cells.cellState(0, 1), 0);
+        Assert.assertEquals(cells.cellCurrentState(0, 1), 0);
     }
 
     @Test
@@ -106,6 +106,6 @@ public class BoundaryCellTest {
         //when
         cells.nextState();
         //then
-        Assert.assertEquals(cells.cellState(2, 2), 0);
+        Assert.assertEquals(cells.cellCurrentState(2, 2), 0);
     }
 }

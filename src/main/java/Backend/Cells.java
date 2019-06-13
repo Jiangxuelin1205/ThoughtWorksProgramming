@@ -13,8 +13,8 @@ public class Cells {
     public static final int LIVING_STATE = 1;
     private static final int DEAD_STATE = 0;
 
-    private int rowCount = 0;
-    private int columnCount = 0;
+    private int rowCount;
+    private int columnCount;
 
     private static final int WAKE_UP_DEAD_CELL = 3;
 
@@ -27,6 +27,9 @@ public class Cells {
         columnCount = currentState[0].length;
     }
 
+    /**
+     * 从文件中读入初始状态
+     */
     public Cells(String path) throws IOException {
         FileInputStream fileInputStream = new FileInputStream(path);
         BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream));
@@ -46,6 +49,9 @@ public class Cells {
         }
     }
 
+    /**
+     * 随机生成rowCount*columnCount的图片
+     */
     public Cells(int rowCount, int columnCount) {
         this.rowCount = rowCount;
         this.columnCount = columnCount;
@@ -67,6 +73,9 @@ public class Cells {
         currentState = newState;
     }
 
+    /**
+     * 单个细胞的更新状态
+     */
     private int cellNextState(int row, int column) {
 
         int livingCellCount = livingCellCount(row, column);
@@ -88,18 +97,17 @@ public class Cells {
     }
 
     private int livingCellCount(int row, int column) {
-
         int livingCellCount = 0;
         for (int rowIndex = row - 1; rowIndex <= row + 1; rowIndex++) {
             for (int columnIndex = column - 1; columnIndex <= column + 1; columnIndex++) {
-                livingCellCount += cellState(rowIndex, columnIndex);
+                livingCellCount += cellCurrentState(rowIndex, columnIndex);
             }
         }
         livingCellCount = livingCellCount - currentState[row][column];
         return livingCellCount;
     }
 
-    public int cellState(int row, int column) {
+    public int cellCurrentState(int row, int column) {
         if (outOfRowBound(row) || outOfColumnBound(column)) {
             return DEAD_STATE;
         }

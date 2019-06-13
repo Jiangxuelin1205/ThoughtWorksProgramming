@@ -28,7 +28,7 @@ public class GridPanel extends JPanel {
         image = new BufferedImage(cells.rowCount(), cells.columnCount(), BufferedImage.TYPE_INT_RGB);
         for (int row = 0; row < cells.rowCount(); row++) {
             for (int column = 0; column < cells.columnCount(); column++) {
-                if (cells.cellState(row, column) == Cells.LIVING_STATE) {
+                if (cells.cellCurrentState(row, column) == Cells.LIVING_STATE) {
                     image.setRGB(row, column, LIVING_COLOR.getRGB());
                 } else {
                     image.setRGB(row, column, DEAD_COLOR.getRGB());

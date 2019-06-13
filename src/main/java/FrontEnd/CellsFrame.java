@@ -12,30 +12,29 @@ import java.util.concurrent.TimeUnit;
 public class CellsFrame extends JFrame {
 
     private JButton startButton = new JButton("开始游戏");
-    private JButton randomButton = new JButton("随机生成");
     private JTextField durationTextField = new JTextField();
 
     private GridPanel gridPanel = new GridPanel();
 
-    private int threadState = 0;
+
     private boolean isStart = false;
     private static final int THREAD_STATE_DEAD = 0;
     private static final int THREAD_STATE_RUNNING = 1;
     private static final int THREAD_STATE_PAUSE = 2;
-
-    private Thread thread;
-    private Cells cells;
-    private int duration = DEFAULT_DURATION;
-
     private static final int DEFAULT_DURATION = 200;
 
+    //游戏状态
+    private Thread updateCells;
+    private Cells cells;
+    private int duration = DEFAULT_DURATION;
+    private int threadState = THREAD_STATE_DEAD;
 
     public CellsFrame() throws HeadlessException {
         setTitle("生命游戏");
-
         JButton selectFileButton = new JButton("选择文件");
-        selectFileButton.addActionListener(new OpenFileListener());
-        startButton.addActionListener(new StartOrStopGameListener());
+        selectFileButton.addActionListener(new ReadFromFile());
+        startButton.addActionListener(new StartOrStopGame());
+        JButton randomButton = new JButton("随机生成");
         randomButton.addActionListener(new RandomCreateCells());
         JButton durationSetter = new JButton("间隔(ms)");
         durationSetter.addActionListener(new TimeSetter());
@@ -55,8 +54,10 @@ public class CellsFrame extends JFrame {
         getContentPane().add(gridPanel);
     }
 
+    /**
+     * 随机生成细胞初始状态
+     */
     private class RandomCreateCells implements ActionListener{
-
         @Override
         public void actionPerformed(ActionEvent e) {
             cells = new Cells(50, 50);
@@ -69,24 +70,35 @@ public class CellsFrame extends JFrame {
         }
     }
 
-    private class OpenFileListener implements ActionListener {
-
+    /**
+     * 从文件中读取细胞初始状态
+     * 初始状态包括行，列和每个细胞的状态
+     * 文件格式形如：
+     * 3 6
+     * 0 0 0 0 0 0
+     * 0 1 0 0 0 0
+     * 1 0 0 1 0 1
+     */
+    private class ReadFromFile implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent lister) {
             JFileChooser chooser = new JFileChooser(".");
             chooser.setDialogTitle("请选择初始配置文件");
-            //choose file
             int result = chooser.showOpenDialog(null);
             if (result == JFileChooser.APPROVE_OPTION) {
                 startButton.setText("开始游戏");
+
+                //点击按钮，重置游戏状态
                 isStart = false;
                 threadState = THREAD_STATE_DEAD;
+
                 String filePath = chooser.getSelectedFile().getPath();
                 try {
                     cells = new Cells(filePath);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
                 gridPanel.createBoard(cells);
                 add("Center", gridPanel);
                 gridPanel.updateUI();
@@ -95,13 +107,13 @@ public class CellsFrame extends JFrame {
     }
 
 
-    private class StartOrStopGameListener implements ActionListener {
+    private class StartOrStopGame implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (thread == null) {
-                thread = new Thread(new gameTask());
-                thread.start();
+            if (updateCells == null) {
+                updateCells = new Thread(new gameTask());
+                updateCells.start();
                 isStart = true;
                 threadState = THREAD_STATE_RUNNING;
                 startButton.setText("暂停游戏");
@@ -145,7 +157,7 @@ public class CellsFrame extends JFrame {
                     ex.printStackTrace();
                 }
             }
-            thread = null;
+            updateCells = null;
         }
     }
 

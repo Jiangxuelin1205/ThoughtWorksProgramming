@@ -1,3 +1,4 @@
+import Backend.Cells;
 import org.junit.Test;
 
 public class RandomInputTest {

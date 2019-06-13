@@ -1,11 +1,13 @@
+package Backend;
+
 import java.io.*;
 import java.util.Random;
 
-class Cells {
+public class Cells {
 
     private int[][] currentState;
 
-    private static final int LIVING_STATE = 1;
+    public static final int LIVING_STATE = 1;
     private static final int DEAD_STATE = 0;
 
     private static int rowCount = 0;
@@ -16,13 +18,13 @@ class Cells {
     private static final int LIVE_ON_MIN = 2;
     private static final int LIVE_ON_MAX = 3;
 
-    Cells(int[][] currentState) {
+    public Cells(int[][] currentState) {
         this.currentState = currentState;
         rowCount = currentState.length;
         columnCount = currentState[0].length;
     }
 
-    Cells(String path) throws IOException {
+    public Cells(String path) throws IOException {
         FileInputStream fileInputStream = new FileInputStream(path);
         BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream));
         String str = reader.readLine();
@@ -39,7 +41,7 @@ class Cells {
         }
     }
 
-    Cells(int rowCount, int columnCount) {
+    public Cells(int rowCount, int columnCount) {
         currentState = new int[rowCount][columnCount];
         for (int row = 0; row < rowCount; row++) {
             for (int column = 0; column < columnCount; column++) {
@@ -48,7 +50,7 @@ class Cells {
         }
     }
 
-    void nextState() {
+    public void nextState() {
         int[][] newState = new int[rowCount][columnCount];
         for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
             for (int columnIndex = 0; columnIndex < columnCount; columnIndex++) {
@@ -94,18 +96,18 @@ class Cells {
         return livingCellCount;
     }
 
-    int cellState(int row, int column) {
+    public int cellState(int row, int column) {
         if (outOfRowBound(row) || outOfColumnBound(column)) {
             return DEAD_STATE;
         }
         return currentState[row][column];
     }
 
-    int row(){
+    public int rowCount() {
         return rowCount;
     }
 
-    int column(){
+    public int columnCount() {
         return columnCount;
     }
 

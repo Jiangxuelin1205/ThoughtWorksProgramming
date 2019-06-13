@@ -1,8 +1,9 @@
 package Backend;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Random;
 
 public class Cells {
@@ -12,8 +13,8 @@ public class Cells {
     public static final int LIVING_STATE = 1;
     private static final int DEAD_STATE = 0;
 
-    private static int rowCount = 0;
-    private static int columnCount = 0;
+    private int rowCount = 0;
+    private int columnCount = 0;
 
     private static final int WAKE_UP_DEAD_CELL = 3;
 
@@ -38,7 +39,6 @@ public class Cells {
         int row = 0;
         while ((str = reader.readLine()) != null) {
             String[] aRow = str.split(" ");
-            System.out.println("aRow:"+aRow.length);
             for (int i = 0; i < aRow.length; i++) {
                 currentState[row][i] = Integer.valueOf(aRow[i]);
             }
@@ -47,6 +47,8 @@ public class Cells {
     }
 
     public Cells(int rowCount, int columnCount) {
+        this.rowCount = rowCount;
+        this.columnCount = columnCount;
         currentState = new int[rowCount][columnCount];
         for (int row = 0; row < rowCount; row++) {
             for (int column = 0; column < columnCount; column++) {

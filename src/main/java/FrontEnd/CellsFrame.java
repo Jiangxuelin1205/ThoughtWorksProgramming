@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class CellsFrame extends JFrame {
 
     private JButton startButton = new JButton("开始游戏");
+    private JButton randomButton = new JButton("随机生成");
     private JTextField durationTextField = new JTextField();
 
     private GridPanel gridPanel = new GridPanel();
@@ -35,12 +36,14 @@ public class CellsFrame extends JFrame {
         JButton selectFileButton = new JButton("选择文件");
         selectFileButton.addActionListener(new OpenFileListener());
         startButton.addActionListener(new StartOrStopGameListener());
-        JButton durationSetter = new JButton("动画间隔设置(ms为单位)");
+        randomButton.addActionListener(new RandomCreateCells());
+        JButton durationSetter = new JButton("间隔(ms)");
         durationSetter.addActionListener(new TimeSetter());
 
-        JPanel buttonPanel = new JPanel(new GridLayout(2, 2));
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 5));
         buttonPanel.add(selectFileButton);
         buttonPanel.add(startButton);
+        buttonPanel.add(randomButton);
         buttonPanel.add(durationSetter);
         buttonPanel.add(durationTextField);
 
@@ -50,6 +53,20 @@ public class CellsFrame extends JFrame {
 
         getContentPane().add("North", buttonPanel);
         getContentPane().add(gridPanel);
+    }
+
+    private class RandomCreateCells implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            cells = new Cells(50, 50);
+            startButton.setText("开始游戏");
+            isStart = false;
+            threadState = THREAD_STATE_DEAD;
+            gridPanel.createBoard(cells);
+            add("Center", gridPanel);
+            gridPanel.updateUI();
+        }
     }
 
     private class OpenFileListener implements ActionListener {
@@ -76,6 +93,7 @@ public class CellsFrame extends JFrame {
             }
         }
     }
+
 
     private class StartOrStopGameListener implements ActionListener {
 

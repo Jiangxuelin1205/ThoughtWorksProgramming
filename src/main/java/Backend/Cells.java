@@ -1,5 +1,7 @@
 package Backend;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import java.io.*;
 import java.util.Random;
 
@@ -28,12 +30,15 @@ public class Cells {
         FileInputStream fileInputStream = new FileInputStream(path);
         BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream));
         String str = reader.readLine();
-        rowCount = Integer.valueOf(str.split(" ")[0]);
-        columnCount = Integer.valueOf(str.split(" ")[1]);
-        currentState = new int[rowCount][columnCount];
+
+        rowCount = Integer.valueOf(str.split(" ")[1]);
+        columnCount = Integer.valueOf(str.split(" ")[0]);
+
+        this.currentState = new int[rowCount][columnCount];
         int row = 0;
         while ((str = reader.readLine()) != null) {
             String[] aRow = str.split(" ");
+            System.out.println("aRow:"+aRow.length);
             for (int i = 0; i < aRow.length; i++) {
                 currentState[row][i] = Integer.valueOf(aRow[i]);
             }
@@ -58,10 +63,6 @@ public class Cells {
             }
         }
         currentState = newState;
-    }
-
-    int[][] currentState() {
-        return currentState;
     }
 
     private int cellNextState(int row, int column) {

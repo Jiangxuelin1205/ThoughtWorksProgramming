@@ -11,23 +11,20 @@ import java.util.concurrent.TimeUnit;
 
 public class CellsFrame extends JFrame {
 
-    private JButton selectFileButton = new JButton("选择文件");
     private JButton startButton = new JButton("开始游戏");
-    private JButton durationPromtLabel = new JButton("动画间隔设置(ms为单位)");
     private JTextField durationTextField = new JTextField();
 
     private GridPanel gridPanel = new GridPanel();
-    private JPanel buttonPanel = new JPanel(new GridLayout(2, 2));
 
     private int threadState = 0;
     private boolean isStart = false;
-    private static final int THREAD_STATE_DEAD=0;
-    private static final int THREAD_STATE_RUNNING=1;
-    private static final int THREAD_STATE_PAUSE=2;
+    private static final int THREAD_STATE_DEAD = 0;
+    private static final int THREAD_STATE_RUNNING = 1;
+    private static final int THREAD_STATE_PAUSE = 2;
 
     private Thread thread;
     private Cells cells;
-    private int duration=DEFAULT_DURATION;
+    private int duration = DEFAULT_DURATION;
 
     private static final int DEFAULT_DURATION = 200;
 
@@ -35,13 +32,16 @@ public class CellsFrame extends JFrame {
     public CellsFrame() throws HeadlessException {
         setTitle("生命游戏");
 
+        JButton selectFileButton = new JButton("选择文件");
         selectFileButton.addActionListener(new OpenFileListener());
         startButton.addActionListener(new StartOrStopGameListener());
-        durationPromtLabel.addActionListener(new TimeSetter());
+        JButton durationSetter = new JButton("动画间隔设置(ms为单位)");
+        durationSetter.addActionListener(new TimeSetter());
 
+        JPanel buttonPanel = new JPanel(new GridLayout(2, 2));
         buttonPanel.add(selectFileButton);
         buttonPanel.add(startButton);
-        buttonPanel.add(durationPromtLabel);
+        buttonPanel.add(durationSetter);
         buttonPanel.add(durationTextField);
 
         this.setSize(500, 500);
@@ -84,16 +84,19 @@ public class CellsFrame extends JFrame {
             if (thread == null) {
                 thread = new Thread(new gameTask());
                 thread.start();
-                threadState = THREAD_STATE_RUNNING;
-            }
-            if (isStart) {
-                startButton.setText("开始游戏");
-                isStart = false;
-                threadState = THREAD_STATE_PAUSE;
-            } else {
-                startButton.setText("暂停游戏");
                 isStart = true;
                 threadState = THREAD_STATE_RUNNING;
+                startButton.setText("暂停游戏");
+            } else {
+                if (isStart) {
+                    startButton.setText("开始游戏");
+                    isStart = false;
+                    threadState = THREAD_STATE_PAUSE;
+                } else {
+                    startButton.setText("暂停游戏");
+                    isStart = true;
+                    threadState = THREAD_STATE_RUNNING;
+                }
             }
         }
     }
@@ -124,7 +127,7 @@ public class CellsFrame extends JFrame {
                     ex.printStackTrace();
                 }
             }
-
+            thread = null;
         }
     }
 
@@ -132,7 +135,12 @@ public class CellsFrame extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            duration = Integer.parseInt(durationTextField.getText().trim());
+            try {
+                duration = Integer.parseInt(durationTextField.getText().trim());
+
+            } catch (NumberFormatException exception) {
+                duration = DEFAULT_DURATION;
+            }
         }
     }
 }

@@ -31,8 +31,8 @@ public class Cells {
         BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream));
         String str = reader.readLine();
 
-        rowCount = Integer.valueOf(str.split(" ")[1]);
-        columnCount = Integer.valueOf(str.split(" ")[0]);
+        rowCount = Integer.valueOf(str.split(" ")[0]);
+        columnCount = Integer.valueOf(str.split(" ")[1]);
 
         this.currentState = new int[rowCount][columnCount];
         int row = 0;
